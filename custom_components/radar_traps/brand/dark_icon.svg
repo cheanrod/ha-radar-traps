@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- pole and base -->
+  <rect x="256" y="286" width="58" height="176" rx="16" fill="#ECEFF1"/>
+  <rect x="222" y="452" width="126" height="40" rx="18" fill="#ECEFF1"/>
+
+  <g transform="rotate(-7 300 210)">
+    <!-- housing -->
+    <rect x="152" y="124" width="276" height="184" rx="40" fill="#CFD8DC"/>
+    <!-- visor jutting out over the lens -->
+    <g transform="rotate(-5 300 150)">
+      <rect x="100" y="116" width="272" height="58" rx="27" fill="#ECEFF1"/>
+    </g>
+    <!-- lens -->
+    <circle cx="222" cy="222" r="66" fill="#ECEFF1"/>
+    <circle cx="222" cy="222" r="44" fill="#4FC3F7"/>
+    <circle cx="206" cy="206" r="15" fill="#FFFFFF" opacity="0.9"/>
+    <!-- cooling fins on the back of the housing -->
+    <rect x="316" y="186" width="88" height="20" rx="10" fill="#B0BEC5"/>
+    <rect x="316" y="226" width="88" height="20" rx="10" fill="#B0BEC5"/>
+  </g>
+
+  <!-- flash -->
+  <g stroke="#FFC107" stroke-width="30" stroke-linecap="round" fill="none">
+    <line x1="96" y1="252" x2="26" y2="252"/>
+    <line x1="104" y1="306" x2="44" y2="344"/>
+    <line x1="108" y1="200" x2="52" y2="160"/>
+  </g>
+</svg>
