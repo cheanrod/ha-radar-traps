@@ -41,9 +41,9 @@ def newest(traps: list[RadarTrap]) -> RadarTrap | None:
 def trap_attributes(traps: list[RadarTrap]) -> dict[str, Any]:
     """Build the attribute set shared by every entity.
 
-    ``messages`` mirrors the payload of the standalone scraper this integration
-    replaces, down to its "Keine Blitzer" placeholder, so templates written
-    against that service keep working.
+    ``locations`` and ``messages`` hold the same list; ``messages`` falls back
+    to a "Keine Blitzer" placeholder when nothing is listed, so a notification
+    built from it is never blank.
     """
     latest = newest(traps)
     return {

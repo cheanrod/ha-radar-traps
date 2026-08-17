@@ -5,9 +5,6 @@ Provides the radar traps ("Blitzer") that
 page as Home Assistant entities, so you can be notified before you drive into
 one.
 
-This replaces a standalone Flask scraper that served the same list over HTTP —
-the parsing now runs inside Home Assistant, with no container to keep alive.
-
 ## Installation
 
 **HACS** — add this repository as a custom repository (category *Integration*),
@@ -18,8 +15,8 @@ install it, and restart Home Assistant.
 
 Then add the integration under *Settings → Devices & Services → Add Integration
 → Blitzer Bremen*. Nothing needs to be configured; the only option is how often
-the page is fetched (default: every 10 minutes, the same cadence as the old
-scraper). It can be changed later via the integration's *Configure* button.
+the page is fetched (default: every 10 minutes). It can be changed later via the
+integration's *Configure* button.
 
 ## Entities
 
@@ -41,7 +38,7 @@ a notification:
 | --- | --- |
 | `count` | Number of listed radar traps |
 | `locations` | List of locations, in page order |
-| `messages` | Same list, but `["Keine Blitzer"]` when empty — matches the JSON the old scraper returned |
+| `messages` | Same list, but `["Keine Blitzer"]` when empty, so it is never blank in a message |
 | `traps` | List of `{location, reported, reported_at}` objects |
 | `last_reported` | ISO timestamp of the newest report |
 
