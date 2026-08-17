@@ -1,0 +1,13 @@
+{
+  "domain": "radar_traps",
+  "name": "Blitzer Bremen",
+  "codeowners": ["@cheanrod"],
+  "config_flow": true,
+  "documentation": "https://github.com/cheanrod/ha-radar-traps",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/cheanrod/ha-radar-traps/issues",
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "1.0.0"
+}

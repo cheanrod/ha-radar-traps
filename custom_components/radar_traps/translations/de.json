@@ -1,0 +1,55 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Blitzer Bremen",
+        "description": "Liest die von Bremen Vier unter {url} gemeldeten Blitzer. Es ist nichts einzurichten – wählen Sie nur, wie oft die Seite abgefragt werden soll.",
+        "data": {
+          "scan_interval_minutes": "Aktualisierungsintervall"
+        },
+        "data_description": {
+          "scan_interval_minutes": "Wie oft die Verkehrsseite abgerufen wird, in Minuten. Meldungen stehen meist stundenlang auf der Seite, zehn Minuten genügen daher."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Die Verkehrsseite von Bremen Vier ist nicht erreichbar.",
+      "cannot_parse": "Die Verkehrsseite wurde geladen, enthält aber keinen Blitzer-Abschnitt.",
+      "unknown": "Unerwarteter Fehler"
+    },
+    "abort": {
+      "single_instance_allowed": "Blitzer Bremen ist bereits eingerichtet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Blitzer Bremen Optionen",
+        "data": {
+          "scan_interval_minutes": "Aktualisierungsintervall"
+        },
+        "data_description": {
+          "scan_interval_minutes": "Wie oft die Verkehrsseite abgerufen wird, in Minuten."
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "active": {
+        "name": "Blitzer gemeldet"
+      }
+    },
+    "sensor": {
+      "count": {
+        "name": "Blitzer"
+      },
+      "latest": {
+        "name": "Neuester Blitzer"
+      },
+      "last_reported": {
+        "name": "Zuletzt gemeldet"
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Blitzer Bremen",
+        "description": "Reads the radar traps Bremen Vier lists at {url}. Nothing needs to be configured — just choose how often the page should be checked.",
+        "data": {
+          "scan_interval_minutes": "Update interval"
+        },
+        "data_description": {
+          "scan_interval_minutes": "How often the traffic page is fetched, in minutes. Entries usually stay up for hours, so ten minutes is plenty."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to reach the Bremen Vier traffic page.",
+      "cannot_parse": "The traffic page was reached but contains no radar trap section.",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "single_instance_allowed": "Blitzer Bremen is already set up."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Blitzer Bremen options",
+        "data": {
+          "scan_interval_minutes": "Update interval"
+        },
+        "data_description": {
+          "scan_interval_minutes": "How often the traffic page is fetched, in minutes."
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "active": {
+        "name": "Radar traps reported"
+      }
+    },
+    "sensor": {
+      "count": {
+        "name": "Radar traps"
+      },
+      "latest": {
+        "name": "Latest radar trap"
+      },
+      "last_reported": {
+        "name": "Last reported"
+      }
+    }
+  }
+}

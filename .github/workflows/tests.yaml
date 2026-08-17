@@ -1,0 +1,23 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  pytest:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v7"
+      - uses: "actions/setup-python@v6"
+        with:
+          python-version: "3.13"
+      # The parser is pure standard library, so the suite needs nothing but
+      # pytest itself.
+      - name: Install pytest
+        run: python -m pip install --upgrade pytest
+      - name: Run tests
+        run: pytest -q
