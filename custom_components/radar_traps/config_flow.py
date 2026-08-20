@@ -56,7 +56,11 @@ def _schema(scan_interval: int) -> vol.Schema:
 
 
 async def _async_validate_page(hass: HomeAssistant) -> None:
-    """Confirm the traffic page is reachable and carries a radar trap section."""
+    """Confirm the traffic page is reachable and still readable.
+
+    Whether any radar trap is listed right now is deliberately not a criterion --
+    the page carries none most of the time, and setup has to work anyway.
+    """
     session = async_get_clientsession(hass)
     response = await session.get(TRAFFIC_URL, timeout=aiohttp.ClientTimeout(total=30))
     response.raise_for_status()

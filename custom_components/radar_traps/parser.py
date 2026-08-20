@@ -6,9 +6,11 @@ The radar traps live in their own ``<section class="traffic-section
 anchor on those class names and keep the location text only -- the topline is
 the same word on every entry and the date is parsed separately.
 
-A missing section means the page was reworked (or something other than the
-traffic page was served) and is an error; a section with no entries simply
-means there are no radar traps right now.
+The page only renders the sections that currently carry something, so the radar
+trap section is absent whenever no trap is reported -- that is a normal, empty
+result, not a failure. What must be there is the ``<div class="traffic">``
+container around the sections: without it the page was reworked, or something
+other than the traffic page was served, and that is an error.
 """
 
 from __future__ import annotations
@@ -19,6 +21,7 @@ from datetime import datetime
 from html.parser import HTMLParser
 from zoneinfo import ZoneInfo
 
+TRAFFIC_CONTAINER_CLASS = "traffic"
 RADAR_SECTION_CLASS = "-traffic-section-radartraps"
 ENTRY_CLASS = "traffic-section-entry"
 TITLE_CLASS = "traffic-event-title"
@@ -72,7 +75,7 @@ _DATE_RE = re.compile(
 
 
 class RadarPageError(Exception):
-    """Raised when the traffic page does not contain a radar trap section."""
+    """Raised when the page served is not the traffic page we know."""
 
 
 @dataclass(frozen=True)
@@ -115,6 +118,7 @@ class _RadarParser(HTMLParser):
 
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
+        self.container_found = False
         self.section_found = False
         self.traps: list[RadarTrap] = []
         self._section_nesting = 0
@@ -131,6 +135,8 @@ class _RadarParser(HTMLParser):
         classes = (dict(attrs).get("class") or "").split()
 
         if not self._in_section:
+            if TRAFFIC_CONTAINER_CLASS in classes:
+                self.container_found = True
             if tag == "section" and RADAR_SECTION_CLASS in classes:
                 self._in_section = True
                 self.section_found = True
@@ -209,8 +215,11 @@ class _RadarParser(HTMLParser):
 def parse_radar_page(html: str) -> list[RadarTrap]:
     """Parse the traffic page and return the radar traps listed on it.
 
+    An absent radar trap section is an empty result: the page leaves the section
+    out while nothing is reported.
+
     Raises:
-        RadarPageError: if the page carries no radar trap section at all.
+        RadarPageError: if the document is not the traffic page.
     """
     parser = _RadarParser()
     try:
@@ -219,9 +228,7 @@ def parse_radar_page(html: str) -> list[RadarTrap]:
     except Exception as err:  # noqa: BLE001 - malformed markup must not raise
         raise RadarPageError(f"Could not parse the traffic page: {err}") from err
 
-    if not parser.section_found:
-        raise RadarPageError(
-            "No radar trap section found; the page layout likely changed"
-        )
+    if not (parser.container_found or parser.section_found):
+        raise RadarPageError("No traffic section found; the page was reworked")
 
     return parser.traps

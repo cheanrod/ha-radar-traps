@@ -14,7 +14,7 @@
     },
     "error": {
       "cannot_connect": "Failed to reach the Bremen Vier traffic page.",
-      "cannot_parse": "The traffic page was reached but contains no radar trap section.",
+      "cannot_parse": "The page at that address is no longer the traffic page Bremen Vier used to publish.",
       "unknown": "Unexpected error"
     },
     "abort": {

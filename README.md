@@ -42,9 +42,10 @@ a notification:
 | `traps` | List of `{location, reported, reported_at}` objects |
 | `last_reported` | ISO timestamp of the newest report |
 
-If the page cannot be fetched, or its radar trap section disappears, the
-entities go *unavailable* rather than reporting a stale list. An empty section
-is a normal state (`off` / `0`), not an error.
+If the page cannot be fetched, or what is served is no longer the traffic page,
+the entities go *unavailable* rather than reporting a stale list. Having no
+radar traps is a normal state (`off` / `0`), not an error — the page leaves the
+radar trap section out entirely while nothing is reported.
 
 ## Example: notify when a radar trap shows up
 
@@ -101,9 +102,10 @@ it while you are actually driving.
   page are deliberately ignored — this integration covers radar traps only.
 - Report times are published in German local time and are exposed as proper
   timestamps.
-- The tests in `tests/` run against a saved copy of the page in
-  `tests/fixtures/`. Refresh it and update the expected values when the page
-  layout changes:
+- The tests in `tests/` run against saved copies of the page in
+  `tests/fixtures/` — `verkehr.html` from a day with radar traps listed,
+  `verkehr-no-radartraps.html` from one without. Refresh the matching one and
+  update the expected values when the page layout changes:
 
   ```bash
   curl -sL https://www.bremenvier.de/verkehr/index.html -o tests/fixtures/verkehr.html

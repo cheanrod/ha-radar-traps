@@ -14,7 +14,7 @@
     },
     "error": {
       "cannot_connect": "Die Verkehrsseite von Bremen Vier ist nicht erreichbar.",
-      "cannot_parse": "Die Verkehrsseite wurde geladen, enthält aber keinen Blitzer-Abschnitt.",
+      "cannot_parse": "Unter dieser Adresse steht nicht mehr die Verkehrsseite, die Bremen Vier bisher veröffentlicht hat.",
       "unknown": "Unerwarteter Fehler"
     },
     "abort": {

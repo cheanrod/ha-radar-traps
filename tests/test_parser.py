@@ -29,6 +29,10 @@ parse_radar_page = _parser.parse_radar_page
 parse_reported_at = _parser.parse_reported_at
 
 FIXTURE = Path(__file__).parent / "fixtures" / "verkehr.html"
+# The same page on a day without a single radar trap: the section is left out.
+FIXTURE_NO_RADARTRAPS = (
+    Path(__file__).parent / "fixtures" / "verkehr-no-radartraps.html"
+)
 BERLIN = ZoneInfo("Europe/Berlin")
 
 
@@ -116,8 +120,30 @@ def test_empty_section_is_not_an_error():
     assert parse_radar_page(_section("")) == []
 
 
-def test_missing_section_raises():
-    """A page without the radar trap section is a parse failure."""
+def test_missing_section_is_not_an_error():
+    """The page drops the section entirely when nothing is reported."""
+    html = """
+    <html><body><div class="traffic">
+      <section class="traffic-section -traffic-section-warnings">
+        <ul><li class="traffic-section-entry"><div class="traffic-event">
+          <p class="traffic-event-topline">Gegenstände auf der Fahrbahn</p>
+          <h3 class="traffic-event-title">Vorsicht bitte auf der A7.</h3>
+        </div></li></ul>
+      </section>
+    </div></body></html>
+    """
+    assert parse_radar_page(html) == []
+
+
+def test_saved_page_without_the_section():
+    """A real copy of the page on a trap-free day parses as empty, not an error."""
+    html = FIXTURE_NO_RADARTRAPS.read_text(encoding="utf-8")
+    assert "radartraps" not in html
+    assert parse_radar_page(html) == []
+
+
+def test_page_without_traffic_container_raises():
+    """Losing the container around the sections means the page was reworked."""
     with pytest.raises(RadarPageError):
         parse_radar_page("<html><body><p>Wartung</p></body></html>")
 
