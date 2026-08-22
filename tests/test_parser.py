@@ -24,7 +24,6 @@ _pkg.__path__ = [str(_COMPONENT)]
 sys.modules.setdefault("_radar_traps", _pkg)
 
 _parser = importlib.import_module("_radar_traps.parser")
-RadarPageError = _parser.RadarPageError
 parse_radar_page = _parser.parse_radar_page
 parse_reported_at = _parser.parse_reported_at
 
@@ -142,10 +141,9 @@ def test_saved_page_without_the_section():
     assert parse_radar_page(html) == []
 
 
-def test_page_without_traffic_container_raises():
-    """Losing the container around the sections means the page was reworked."""
-    with pytest.raises(RadarPageError):
-        parse_radar_page("<html><body><p>Wartung</p></body></html>")
+def test_page_without_any_traffic_markup_is_not_an_error():
+    """With nothing at all to report the page drops the whole traffic block."""
+    assert parse_radar_page("<html><body><p>Wartung</p></body></html>") == []
 
 
 def test_entry_without_date():
